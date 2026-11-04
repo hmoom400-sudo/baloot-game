@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050505" />
+    
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Preload critical hero assets (LCP WebP logo) -->
+    <link rel="preload" as="image" href="/dawsha-logo.webp" type="image/webp" fetchpriority="high" />
+    
+    <!-- Preconnect to essential third-party origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/cairo/v23/SLXVc1nY6HkvalIWgGQdRw.woff2" />
+    <link rel="preconnect" href="https://clerk.dawsha.games" crossorigin />
+    <link rel="dns-prefetch" href="https://clerk.dawsha.games" />
+    <link rel="preconnect" href="https://img.clerk.com" crossorigin />
+    <link rel="preconnect" href="https://accounts.google.com" />
+    <link rel="dns-prefetch" href="https://accounts.google.com" />
+    <!-- Google Analytics (with Google Consent Mode v2 & deferred loading) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = window.gtag || gtag;
+
+      // Google Consent Mode v2: initialize default state before any tags run
+      (function() {
+        var savedConsent = null;
+        var savedPersonalization = null;
+        try {
+          savedConsent = localStorage.getItem('cookie_consent');
+          savedPersonalization = localStorage.getItem('ad_personalization');
+        } catch (e) {}
+
+        if (savedConsent === 'true') {
+          gtag('consent', 'default', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': savedPersonalization !== 'false' ? 'granted' : 'denied',
+            'ad_personalization': savedPersonalization !== 'false' ? 'granted' : 'denied'
+          });
+        } else {
+          gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'wait_for_update': 500
+          });
+        }
+      })();
+
+      (function () {
+        var gaMeasurementId = 'G-C1LY8TW8PR';
+        window.__GA_MEASUREMENT_ID__ = gaMeasurementId;
+        var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+        function loadGtag() {
+          if (window.__gtagLoaded) return;
+          window.__gtagLoaded = true;
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaMeasurementId);
+          document.head.appendChild(script);
+          gtag('js', new Date());
+          gtag('config', gaMeasurementId, {
+            send_page_view: false,
+            anonymize_ip: true,
+            debug_mode: isLocal
+          });
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGtag, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', loadGtag, { once: true });
+        }
+      })();
+    </script>
+    
+    <!-- Critical inline styles (above-the-fold only) -->
+    <style>
+      *,*::before,*::after{box-sizing:border-box}
+      body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#050505;color:#fff;min-height:100vh}
+      #splash-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;background:#050505;overflow:hidden;transition:opacity .25s ease}
+      .splash-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(188,255,0,0.08) 0%,transparent 65%),radial-gradient(ellipse 40% 40% at 10% 90%,rgba(255,0,110,0.07) 0%,transparent 60%),radial-gradient(ellipse 30% 30% at 90% 10%,rgba(155,93,229,0.06) 0%,transparent 60%);pointer-events:none}
+      .splash-content{position:relative;display:flex;flex-direction:column;align-items:center;gap:20px;animation:splashFadeIn 0.3s ease-out both}
+      .splash-logo-wrapper{position:relative;width:140px;height:140px}
+      .splash-logo{width:140px;height:140px;object-fit:cover;border-radius:36px;animation:logoEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.05s both;box-shadow:0 0 0 2px rgba(188,255,0,0.35),0 0 50px rgba(188,255,0,0.18),0 20px 60px rgba(0,0,0,0.6)}
+      .splash-logo-glow{position:absolute;inset:-14px;border-radius:50px;background:radial-gradient(circle,rgba(188,255,0,0.22) 0%,transparent 70%);animation:glowPulse 2.2s ease-in-out infinite;pointer-events:none}
+      .splash-particle{position:absolute;border-radius:50%;pointer-events:none;animation:particleFloat linear infinite}
+      .splash-title{color:#bcff00;font-family:'Cairo',system-ui,-apple-system,sans-serif;font-weight:900;font-size:52px;letter-spacing:-2px;font-style:italic;line-height:1;animation:slideUp 0.4s ease-out 0.2s both}
+      .splash-tagline{color:rgba(255,255,255,0.45);font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:500;letter-spacing:3px;text-transform:uppercase;margin-top:-12px;animation:slideUp 0.4s ease-out 0.3s both}
+      .splash-dots{display:flex;gap:10px;margin-top:4px;animation:slideUp 0.4s ease-out 0.4s both}
+      .splash-dots span{width:8px;height:8px;background:#bcff00;border-radius:50%;animation:dotBounce 1.3s ease-in-out infinite}
+      .splash-dots span:nth-child(2){animation-delay:0.22s}
+      .splash-dots span:nth-child(3){animation-delay:0.44s}
+      body.loaded #splash-screen{opacity:0;pointer-events:none}
+      
+      @keyframes splashFadeIn{from{opacity:0}to{opacity:1}}
+      @keyframes logoEntrance{from{transform:scale(0.55) translateY(24px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+      @keyframes glowPulse{0%,100%{opacity:0.45;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+      @keyframes slideUp{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+      @keyframes dotBounce{0%,80%,100%{transform:scale(0.65);opacity:0.35}40%{transform:scale(1);opacity:1}}
+      @keyframes particleFloat{
+        0%{transform:translate(0,0) scale(1);opacity:0.8}
+        25%{transform:translate(var(--px),var(--py)) scale(1.3);opacity:1}
+        50%{transform:translate(calc(var(--px)*1.4),calc(var(--py)*0.5)) scale(0.8);opacity:0.6}
+        75%{transform:translate(calc(var(--px)*0.6),calc(var(--py)*1.3)) scale(1.1);opacity:0.9}
+        100%{transform:translate(0,0) scale(1);opacity:0.8}
+      }
+      
+      /* Route-level suspense loader (used by React.lazy fallback) */
+      @keyframes dawshaSpin{to{transform:rotate(360deg)}}
+
+      /* Reserve space for game card images */
+      .game-card-image{aspect-ratio:1/1;width:100%;object-fit:cover}
+      
+      /* Font loading fallback */
+      @font-face{font-family:'Cairo';font-display:swap;src:url(https://fonts.gstatic.com/s/cairo/v23/SLXVc1nY6HkvalIWgGQdRw.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF}
+    </style>
+    
+    <!-- Non-blocking font loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" onload="this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" /></noscript>
+
+    <!-- Primary SEO Meta Tags (Overwritten dynamically per route during prerender / hydration) -->
+    <title data-rh="true">دوشة | أفضل ألعاب جماعية عربية أونلاين مجانية بدون تحميل</title>
+    <meta data-rh="true" name="title" content="دوشة | أفضل ألعاب جماعية عربية أونلاين مجانية بدون تحميل" />
+    <meta data-rh="true" name="description" content="العب أكثر من 13 لعبة جماعية عربية وسهرات أونلاين مجاناً بدون تحميل: برا السالفة، لو خيروك، مافيا، صراحة أو جرأة، تابو، ومن سيربح المليون مع أصدقائك." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Open Graph & Twitter Fallbacks -->
+    <meta data-rh="true" property="og:site_name" content="دوشة - Dawsha" />
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:title" content="دوشة | أفضل ألعاب جماعية عربية أونلاين مجانية بدون تحميل" />
+    <meta data-rh="true" property="og:description" content="العب أكثر من 13 لعبة جماعية عربية وسهرات أونلاين مجاناً بدون تحميل: برا السالفة، لو خيروك، مافيا، صراحة أو جرأة، تابو، ومن سيربح المليون مع أصدقائك." />
+    <meta data-rh="true" property="og:image" content="https://dawsha.games/og-home.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DawshaGames" />
+    <meta name="twitter:creator" content="@DawshaGames" />
+    <meta data-rh="true" name="twitter:title" content="دوشة | أفضل ألعاب جماعية عربية أونلاين مجانية بدون تحميل" />
+    <meta data-rh="true" name="twitter:description" content="العب أكثر من 13 لعبة جماعية عربية وسهرات أونلاين مجاناً بدون تحميل: برا السالفة، لو خيروك، مافيا، صراحة أو جرأة، تابو، ومن سيربح المليون مع أصدقائك." />
+
+    <!-- App Meta -->
+    <meta name="author" content="دوشة - Dawsha" />
+    <meta name="publisher" content="دوشة - Dawsha" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="دوشة" />
+    
+    <!-- Site-wide Organization Structured Data (Schema.org) -->
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"دوشة - Dawsha","alternateName":["دوشة","Dawsha Games","Dawsha"],"url":"https://dawsha.games","logo":{"@type":"ImageObject","url":"https://dawsha.games/icon-512x512.png","width":512,"height":512},"image":"https://dawsha.games/icon-512x512.png","sameAs":["https://www.facebook.com/profile.php?id=61591862163111","https://twitter.com/DawshaGames","https://instagram.com/dawsha.games","https://tiktok.com/@dawsha.games"],"contactPoint":{"@type":"ContactPoint","contactType":"customer support","url":"https://dawsha.games/contact"}}</script>
+    <!-- Debug Logger -->
+    <script>window.onerror=function(msg,url,line,col,error){console.error("Global Error:",msg,"at",url,":",line);};</script>
+    <script type="module" crossorigin src="/assets/index-DJcI8LiQ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-Bto_hE_3.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-clerk-Dko_QhGP.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-motion-12LX1Mdb.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-ui-B_DBtAWJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-firebase-BNcFps50.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-DR38qmw9.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js" defer></script></head>
+  <body>
+    <noscript>
+      <main dir="rtl" lang="ar" style="padding:32px 24px;max-width:1100px;margin:0 auto;color:#eee;font-family:system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.9;background:#050505;">
+        <header style="margin-bottom:36px;border-bottom:1px solid #222;padding-bottom:24px;">
+          <h1 style="font-size:2.4rem;font-weight:900;margin:0 0 16px 0;color:#bcff00;line-height:1.3;">دوشة - أقوى منصة ألعاب جماعية عربية مجانية بدون تحميل</h1>
+          <p style="font-size:1.15rem;color:#ccc;max-width:900px;margin:0 0 16px 0;">
+            أهلاً بك في منصة دوشة (Dawsha Games)، الوجهة العربية الأولى لكل من يبحث عن الضحك، التنافس، وكسر الروتين في الجلسات العائلية وسهرات الأصدقاء. تضم منصتنا أكثر من 13 لعبة جماعية متنوعة تعمل فوراً وبشكل مجاني 100% داخل المتصفح دون الحاجة لتثبيت أي تطبيق أو استهلاك مساحة هاتفك.
+          </p>
+          <p style="font-size:1.05rem;color:#aaa;margin:0;">
+            سواء كنت ترغب في اللعب أوفلاين بتمرير هاتف واحد في المجلس أو ترغب بإنشاء غرفة أونلاين خاصة لدعوة أصدقائك من أي مكان حول العالم، توفر لك دوشة محتوى متجدداً باستمرار ومدعوماً بالذكاء الاصطناعي مع فلاتر أمان عائلية متكاملة.
+          </p>
+        </header>
+
+        <section style="margin-bottom:40px;">
+          <h2 style="font-size:1.8rem;color:#bcff00;margin-bottom:20px;">دليل ألعاب دوشة الجماعية المتوفرة مجاناً</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/barra-salfa" style="color:#bcff00;text-decoration:none;">برا السالفة (لعبة الجاسوس)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">اللعبة الأكثر طلباً في الجمعات العربية! يدخل جميع اللاعبين في الموضوع ما عدا شخص واحد عشوائي يكون 'برا السالفة'. اطرحوا أسئلة ذكية لكشف الجاسوس قبل أن يخمن الكلمة السرية.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/khayarouk" style="color:#bcff00;text-decoration:none;">لو خيروك (أسئلة وتحديات)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">أكثر من 200 سؤال مصنف بين المضحك، المحرج، والصعب للأصدقاء والكابلز والعائلة مع تصويت حي لمعرفة اختيارات الناس حول العالم.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/saraha" style="color:#bcff00;text-decoration:none;">صراحة أو جرأة (Truth or Dare)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">كلاسيكية السهرات بأسئلة صراحة تكشف الأسرار بطريف القول، وتحديات جرأة فكاهية تفجر الضحك مع فلترة خاصة للمجالس العائلية.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/mafia" style="color:#bcff00;text-decoration:none;">مافيا أونلاين (لعبة الأدوار والخداع)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">صراع ملحمي بين المواطنين الأبرياء وأعضاء المافيا الخفيين مع 10 أدوار سرية (المحقق، الطبيب، القناص) ومراحل ليل ونهار متزامنة.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/charades" style="color:#bcff00;text-decoration:none;">بدون كلام (Charades عربي)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">لعبة التمثيل الجماعية الأحدث؛ مثّل اسم الفيلم أو المثل الشعبي بالحركات والإشارات فقط دون نطق أي كلمة قبل انتهاء المؤقت.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/who-am-i" style="color:#bcff00;text-decoration:none;">مين أنا؟ (تخمين الشخصيات)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">ضع الهاتف على جبهتك وخمن شخصيتك السرية من أسئلة أصدقائك التي إجابتها 'نعم' أو 'لا' فقط مع أكثر من 300 شخصية مشهورة.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/most-likely" style="color:#bcff00;text-decoration:none;">مين أكثر واحد؟ (لعبة الاتهامات)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">لعبة التصويت السريع والاتهامات الطريفة؛ اقرأ الموقف الغريب وأشر فوراً مع أصدقائك على الشخص الأكثر احتمالية لفعله.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/sketch" style="color:#bcff00;text-decoration:none;">لعبة ارسم وخمن أونلاين (سكتش دوشة - Skribbl عربي)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">أقوى لعبة رسم وتخمين جماعية عربية مجانية بدون تحميل! أكثر من 2,000 كلمة مصنفة في 15 قسماً، 24 لوناً، لوحة ذكية تدعم التراجع والإعادة والتخمين الذكي. ارسم وخمن مع أصدقائك في غرف خاصة وسرعة فائقة.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/trivia" style="color:#bcff00;text-decoration:none;">صح أم خطأ (مسابقة المعلومات العامة)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">اختبر سرعة بديهتك وثقافتك في العلوم، التاريخ، الجغرافيا، والرياضة بأسئلة سريعة ومثيرة للحماس.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/خمن-الايموجي" style="color:#bcff00;text-decoration:none;">خمن الإيموجي (فكك الإيموجي)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">فك شفرات رموز الإيموجي لتخمين أسماء الأفلام العربية، المسلسلات، الأمثال الشعبية، وأسماء الأكلات الشهيرة.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/wheel" style="color:#bcff00;text-decoration:none;">عجلة الحظ التفاعلية</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">عجلة حظ قابلة للتخصيص الكامل لإدارة قرعة السهرات والمسابقات، أسئلة الصراحة، وتحديات العقابات الحماسية.</p>
+            </article>
+            <article style="background:#111;padding:20px;border-radius:16px;border:1px solid #222;">
+              <h3 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;"><a href="/temp-mail" style="color:#bcff00;text-decoration:none;">بريد مؤقت للألعاب (@dawsha.games)</a></h3>
+              <p style="color:#aaa;font-size:0.95rem;margin:0;">خدمة مجانية فورية لاستقبال رسائل وأكواد تفعيل حسابات الألعاب (ديسكورد، ستيم، إبيك) بدون حظر مع استخراج فوري لرموز OTP.</p>
+            </article>
+          </div>
+        </section>
+
+        <section style="margin-bottom:40px;background:#111;padding:24px;border-radius:20px;border:1px solid #222;">
+          <h2 style="font-size:1.8rem;color:#bcff00;margin-bottom:16px;">لماذا يفضل اللاعبون منصة دوشة؟</h2>
+          <ul style="color:#ccc;font-size:1.05rem;padding-right:20px;margin:0 0 20px 0;">
+            <li style="margin-bottom:10px;"><strong>لعب فوري مجاني:</strong> تعمل جميع الألعاب مباشرة من المتصفح دون الحاجة لتنزيل أي برامج أو تطبيقات.</li>
+            <li style="margin-bottom:10px;"><strong>مرونة كاملة:</strong> العب بتمرير هاتف واحد أوفلاين في الجلسة أو أنشئ غرف أونلاين خاصة ومحمية برمز فريد.</li>
+            <li style="margin-bottom:10px;"><strong>ذكاء اصطناعي عربي:</strong> نستخدم تقنيات الذكاء الاصطناعي لابتكار بنوك أسئلة ومواقف حصرية ومتجددة تناسب الثقافة العربية.</li>
+            <li style="margin-bottom:10px;"><strong>أمان وخصوصية:</strong> بيئة نظيفة ومناسبة للأطفال والمجالس العائلية بدون إعلانات معطلة للعب.</li>
+          </ul>
+        </section>
+
+        <section style="margin-bottom:40px;background:#111;padding:24px;border-radius:20px;border:1px solid #222;">
+          <h2 style="font-size:1.8rem;color:#bcff00;margin-bottom:16px;">الأسئلة الشائعة حول ألعاب دوشة (FAQ)</h2>
+          <div style="margin-bottom:16px;">
+            <h3 style="font-size:1.2rem;color:#fff;margin-bottom:6px;">هل تطبيق دوشة مجاني بالكامل؟</h3>
+            <p style="color:#aaa;margin:0;">نعم، جميع ألعاب دوشة مجانية 100% وتعمل مباشرة عبر المتصفح دون أي متطلبات دفع إجبارية.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <h3 style="font-size:1.2rem;color:#fff;margin-bottom:6px;">كيف ألعب مع أصدقائي عن بعد؟</h3>
+            <p style="color:#aaa;margin:0;">اضغط على اللعبة المرغوبة، اختر 'إنشاء غرفة أونلاين'، وشارك كود الغرفة المكون من 6 خانات مع أصدقائك لينضموا فوراً من أي جهاز.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <h3 style="font-size:1.2rem;color:#fff;margin-bottom:6px;">هل يمكن لعب الألعاب أوفلاين بدون نت؟</h3>
+            <p style="color:#aaa;margin:0;">نعم، تدعم ألعاب مثل برا السالفة ومين أنا وضع 'تمرير الهاتف' المحلي حيث يتناوب اللاعبون على جهاز واحد في المجلس دون استهلاك إنترنت.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <h3 style="font-size:1.2rem;color:#fff;margin-bottom:6px;">كم عدد اللاعبين المسموح به في الغرفة؟</h3>
+            <p style="color:#aaa;margin:0;">تتسع الغرف من لاعبين اثنين وحتى 20 لاعباً وأكثر بحسب نوع اللعبة، مما يجعلها مثالية للجمعات الصغيرة والاحتفالات الكبيرة.</p>
+          </div>
+        </section>
+
+        <footer style="margin-top:36px;border-top:1px solid #222;padding-top:20px;font-size:0.95rem;color:#777;">
+          <p>
+            <a href="/games" style="color:#bcff00;text-decoration:none;">جميع الألعاب</a> | 
+            <a href="/blog" style="color:#bcff00;text-decoration:none;">مدونة دوشة</a> | 
+            <a href="/about" style="color:#bcff00;text-decoration:none;">من نحن</a> | 
+            <a href="/contact" style="color:#bcff00;text-decoration:none;">اتصل بنا</a> | 
+            <a href="/privacy" style="color:#bcff00;text-decoration:none;">سياسة الخصوصية</a> | 
+            <a href="/terms" style="color:#bcff00;text-decoration:none;">شروط الاستخدام</a>
+          </p>
+          <p>&copy; 2026 دوشة - Dawsha Games. جميع الحقوق محفوظة.</p>
+        </footer>
+      </main>
+    </noscript>
+    <div id="root"></div>
+    <div id="splash-screen" aria-hidden="true">
+      <div class="splash-bg"></div>
+      <div class="splash-content">
+        <div class="splash-logo-wrapper">
+          <div class="splash-logo-glow"></div>
+          <img class="splash-logo" src="/dawsha-logo.webp" alt="دوشة" width="140" height="140" />
+          <!-- Floating particles around the logo -->
+          <div class="splash-particle" style="width:6px;height:6px;background:#bcff00;top:-20px;left:50%;--px:-35px;--py:-28px;animation-duration:3.1s;animation-delay:0.2s;"></div>
+          <div class="splash-particle" style="width:5px;height:5px;background:#ff006e;top:20%;right:-18px;--px:30px;--py:-22px;animation-duration:3.7s;animation-delay:0.5s;"></div>
+          <div class="splash-particle" style="width:4px;height:4px;background:#9b5de5;bottom:15%;left:-16px;--px:-28px;--py:20px;animation-duration:4.2s;animation-delay:0.8s;"></div>
+          <div class="splash-particle" style="width:5px;height:5px;background:#ffd600;bottom:-18px;right:30%;--px:25px;--py:30px;animation-duration:3.5s;animation-delay:0s;"></div>
+          <div class="splash-particle" style="width:4px;height:4px;background:#3a86ff;top:10%;left:10%;--px:-20px;--py:-30px;animation-duration:4.8s;animation-delay:1s;"></div>
+          <div class="splash-particle" style="width:6px;height:6px;background:#ff6b00;bottom:10%;right:5%;--px:32px;--py:18px;animation-duration:3.9s;animation-delay:0.3s;"></div>
+        </div>
+        <div class="splash-title">دوشة</div>
+        <div class="splash-tagline">ألعاب جماعية</div>
+        <div class="splash-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        // Auto-recover if Vite dynamic import chunk fails due to deployment updates
+        window.addEventListener('vite:preloadError', function () {
+          window.location.reload();
+        });
+
+        function hideSplashScreen() {
+          var splash = document.getElementById('splash-screen');
+          if (!splash || splash.getAttribute('data-hidden') === 'true') return;
+          splash.setAttribute('data-hidden', 'true');
+          document.body.classList.add('loaded');
+          splash.setAttribute('aria-hidden', 'true');
+          setTimeout(function () {
+            if (splash && splash.parentNode) {
+              splash.parentNode.removeChild(splash);
+            }
+          }, 250);
+        }
+        window.__hideDawshaSplash = hideSplashScreen;
+        if (window.__dawshaAppMounted) {
+          hideSplashScreen();
+        } else {
+          // Generous fallback timeout so slow mobile 3G/4G connections finish booting before hiding splash
+          setTimeout(hideSplashScreen, 7000);
+        }
+      })();
+    </script>
+  </body>
+</html>
